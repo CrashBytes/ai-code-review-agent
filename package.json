@@ -1,0 +1,42 @@
+{
+  "name": "ai-code-review-agent",
+  "version": "1.0.0",
+  "description": "Production-ready AI code review agent using Claude API and GitHub Actions",
+  "main": "src/review-agent.js",
+  "bin": {
+    "ai-code-review": "./src/review-agent.js"
+  },
+  "scripts": {
+    "test": "mocha test/**/*.test.js",
+    "test:watch": "mocha test/**/*.test.js --watch",
+    "lint": "eslint src test",
+    "start": "node src/review-agent.js"
+  },
+  "keywords": [
+    "code-review",
+    "ai",
+    "claude",
+    "github-actions",
+    "automation",
+    "static-analysis"
+  ],
+  "author": "CrashBytes",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CrashBytes/ai-code-review-agent.git"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0",
+    "@octokit/rest": "^21.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "eslint": "^8.56.0",
+    "mocha": "^10.2.0",
+    "sinon": "^17.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

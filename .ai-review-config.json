@@ -1,0 +1,50 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "maxTokens": 4000,
+  "temperature": 0.0,
+  "reviewFocus": [
+    "security-vulnerabilities",
+    "code-quality",
+    "architectural-concerns",
+    "performance-issues",
+    "error-handling"
+  ],
+  "excludePatterns": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/*.test.js",
+    "**/*.spec.js",
+    "**/coverage/**",
+    "**/.next/**",
+    "**/public/static/**"
+  ],
+  "minSeverity": "medium",
+  "securityRules": {
+    "requireInputValidation": true,
+    "checkSqlInjection": true,
+    "checkXss": true,
+    "checkAuthBypass": true,
+    "requireErrorHandling": true
+  },
+  "qualityRules": {
+    "maxFunctionLength": 50,
+    "maxComplexity": 10,
+    "requireJsdoc": false,
+    "checkNaming": true
+  },
+  "fileTypeRules": {
+    "javascript": {
+      "checkAsyncAwait": true,
+      "requireStrictMode": false
+    },
+    "typescript": {
+      "requireTypes": true,
+      "noExplicitAny": true
+    },
+    "python": {
+      "checkTypeHints": true,
+      "requireDocstrings": false
+    }
+  }
+}
