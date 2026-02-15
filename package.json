@@ -27,7 +27,7 @@
     "url": "https://github.com/CrashBytes/ai-code-review-agent.git"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.30.0",
+    "@anthropic-ai/sdk": "^0.71.2",
     "@octokit/rest": "^21.0.0"
   },
   "devDependencies": {
