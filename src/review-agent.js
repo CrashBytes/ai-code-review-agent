@@ -210,15 +210,38 @@ class CodeReviewAgent {
   }
   
   filterRelevantFiles(files) {
+    const globToRegExp = (pattern) => {
+      // Escape regex metacharacters, but keep glob wildcards as placeholders.
+      let out = '';
+      for (let i = 0; i < pattern.length; i++) {
+        const char = pattern[i];
+        if (char === '*') {
+          if (pattern[i + 1] === '*') {
+            // '**/' matches any number of path segments (including none).
+            if (pattern[i + 2] === '/') {
+              out += '(?:.*/)?';
+              i += 2;
+            } else {
+              out += '.*';
+              i += 1;
+            }
+          } else {
+            // single '*' matches within a path segment
+            out += '[^/]*';
+          }
+        } else if ('\\^$.|?+()[]{}'.includes(char)) {
+          out += '\\' + char;
+        } else {
+          out += char;
+        }
+      }
+      return new RegExp('^' + out + '$');
+    };
+
     const isExcluded = (filename) => {
-      return this.config.excludePatterns.some(pattern => {
-        const regex = new RegExp(
-          pattern
-            .replace(/\*\*/g, '.*')
-            .replace(/\*/g, '[^/]*')
-        );
-        return regex.test(filename);
-      });
+      return this.config.excludePatterns.some(pattern =>
+        globToRegExp(pattern).test(filename)
+      );
     };
     
     return files.filter(file => {
@@ -281,7 +304,7 @@ class CodeReviewAgent {
         (file.patch || '') + (file.content || '')
       );
       
-      if (currentTokens + fileTokens > maxTokensPerChunk && currentChunk.length > 0) {
+      if (currentTokens + fileTokens >= maxTokensPerChunk && currentChunk.length > 0) {
         chunks.push(currentChunk);
         currentChunk = [];
         currentTokens = 0;
@@ -695,9 +718,11 @@ async function main() {
   await agent.execute();
 }
 
-main().catch(error => {
-  console.error('Review failed:', error);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch(error => {
+    console.error('Review failed:', error);
+    process.exit(1);
+  });
+}
 
 module.exports = { CodeReviewAgent, SecurityValidator, MonitoringService };
