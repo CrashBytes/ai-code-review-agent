@@ -27,7 +27,7 @@
     "url": "https://github.com/CrashBytes/ai-code-review-agent.git"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.109.0",
+    "@anthropic-ai/sdk": "^0.111.0",
     "@octokit/rest": "^22.0.1"
   },
   "overrides": {
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "chai": "^6.2.2",
-    "eslint": "^10.6.0",
+    "eslint": "^10.7.0",
     "mocha": "^11.7.6",
     "sinon": "^22.0.0"
   },
